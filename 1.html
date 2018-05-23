@@ -6,169 +6,46 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="1.css">
+    <script src="myJquery.js"></script>
+    <script>
+        
+        $(function () {
 
-    <style>
-        .box {
-            width: 300px;
-            height: 200px;
-            border: 1px solid red;
-            margin: auto;
+            $("div").before("<span>");
+
+        })
+
+
+
+        function inserAfter(insertObj,beforeObj) {
+                 var parent=beforeObj.parentNode;
+                 var next=beforeObj.nextSibling;
+                 while (next&&next.nodeType!=1){
+                     next=next.nextSibling
+                 }
+                 if(next){
+                     parent.insertBefore(insertObj,next);
+                 }else{
+                     parent.appendChild(insertObj);
+                 }
+
         }
 
-        .title {
-            width: 100%;
-            height: 30px;
-            background: #ccc;
-        }
 
-        .title span {
-            float: left;
-            width: 25%;
-            height: 100%;
-            text-align: center;
-            line-height: 30px;
-        }
 
-        .con {
-            width: 100%;
-            height: 170px;
-            overflow: hidden;
-        }
-
-        .con .list {
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            line-height: 50px;
-        }
-    </style>
+    </script>
 </head>
 <body>
 
-<div class="box">
-    <div class="title">
-        <span style="color:red">第一选项</span>
-        <span>第二选项</span>
-        <span>第三选项</span>
-        <span>第四选项</span>
-    </div>
-    <div class="con" style>
-        <div class="list">
-            111111
-        </div>
-        <div class="list">
-            2222
-        </div>
-        <div class="list">
-            3333
-        </div>
-        <div class="list">
-            44444
-        </div>
-    </div>
+<div>
+    1
 </div>
 
-<script>
-    //1. 获取到相应的元素
 
-    //2. 利用每一个元素的特性来进行进一步的操作
-    //3. 创建一个自己的对象，具有获取元素的能力，
-    //   自己的对象批量处理元素的能力  拷贝
-    //
-
-    function $(selector) {
-        function myJquery(selector) {
-            if(typeof selector=="string") {
-                var all = document.querySelectorAll(selector);
-                for (var i = 0; i < all.length; i++) {
-                    this[i] = all[i]
-                }
-                 this.length = all.length;
-            }else if(typeof selector=="object"&&selector.nodeType==1){
-
-                this[0]=selector;
-                this.length=1
-            }
-        }
-
-        myJquery.prototype = {
-            html: function (val) {
-                this.each(function (index, obj) {
-                    obj.innerHTML = val;
-                })
-                return this;
-            },
-            text: function (val) {
-                this.each(function (index, obj) {
-                    obj.innerText = val;
-                })
-                return this;
-            },
-            css: function (attr, val) {
-                this.each(function (index, obj) {
-                    obj.style[attr] = val;
-                })
-                return this;
-            },
-            each: function (callback) {
-                for (var i = 0; i < this.length; i++) {
-                    callback(i, this[i])
-                }
-            },
-
-            attr: function (attr, val) {
-                this.each(function (index, obj) {
-                    if (val) {
-                        obj.setAttribute(attr, val);
-                    } else {
-                        return obj.getAttribute(attr);
-                    }
-                })
-                return this;
-            },
-            removeAttr: function (attr) {
-                this.each(function (index, obj) {
-                    obj.removeAttribute(arr);
-                })
-            },
-            click: function (callback) {
-                this.each(function (index, obj) {
-                    obj.onclick = function () {
-                        callback.call(obj);
-                    }
-                })
-            },
-            index:function (selector) {
-                var all=document.querySelectorAll(selector);
-                for(var i=0;i<all.length;i++){
-                    if(this[0]==all[i]){
-                        return i;
-                    }
-                }
-            },
-            get(index){
-                return this[index];
-            }
-
-        }
-
-        return new myJquery(selector);
-    }
-
-
-    $(".title span").click(function () {
-        $(".list").css("display","none");
-        $($(".list")[$(this).index(".title span")]).css("display","block");
-
-        $(".title span").css("color","");
-        $(this).css("color","red")
-        
-    })
-
-
-</script>
-
-
+<ul>
+    <li>
+        <div></div>
+    </li>
+</ul>
 </body>
 </html>
