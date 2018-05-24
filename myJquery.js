@@ -1,5 +1,5 @@
 function $(selector) {
-    function myJquery(selector) {
+    function myJquery(selector){
         if (typeof selector == "string") {
             if (selector.charAt(0) == "<") {
                 var tag = selector.slice(1, -1);
@@ -22,7 +22,14 @@ function $(selector) {
         }
     }
 
+
     myJquery.prototype = {
+        animate:function (attr,time,callback) {
+            var that=this;
+            this.each(function (index,obj) {
+                that._animate(obj,attr,time,callback)
+            })
+        },
         before: function (tag) {
             var tag=tag.slice(1,-1);
             var ele=document.createElement(tag);
@@ -347,7 +354,43 @@ function $(selector) {
                      parent.appendChild(insertObj);
                  }
 
-        }
+        },
+         _linear:function(t,b,c,d){
+                return c/d*t+b;
+         },
+         _animate:function(obj,attr,time,callback) {
+                var starts={}
+                for(var i in attr){
+                    starts[i]=parseInt(getComputedStyle(obj,null)[i])
+                }
+                console.log(starts);
+                var changes={};
+                for(var i in starts){
+                    changes[i]=attr[i]-starts[i];
+                }
+                var current=0;
+                var that=this;
+                var t=setInterval(function () {
+                    if(current>=time){
+                        if(callback) {
+                            callback()
+                        }
+                        for(var i in changes){
+                            obj.style[i]=attr[i]+"px"
+                        }
+
+                        clearInterval(t);
+
+                    }else{
+                        for(var i in changes){
+                            obj.style[i]=that._linear(current,starts[i],changes[i],time)+"px"
+                        }
+                    }
+                    current+=40;
+                },40)
+
+            }
+
 
     }
 

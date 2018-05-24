@@ -1,3 +1,4 @@
+
 function css (obj,attr,val) {
 		if (obj.nodeType!==1) {
 			return;
@@ -44,7 +45,7 @@ function css (obj,attr,val) {
 		}
 	}
 	//核心动画 循环移动
-	function myflash (obj,attr,stop,speed) {
+function myflash (obj,attr,stop,speed) {
 		var start = css(obj,attr);
 		var end=start;
 		var tmp = 0;
@@ -74,7 +75,7 @@ function css (obj,attr,val) {
 		},60)
 	}
 	//核心动画 演变第二步
-	function myflash1 (obj,myobj,speed) {
+function myflash1 (obj,myobj,speed) {
 		obj.time = setInterval(fun,60)
 		function fun() {
 			for (var i in myobj) {
@@ -110,7 +111,7 @@ function css (obj,attr,val) {
 		}
 	}
 	//核心函数 演变第三步
-	function myAnim(obj,myobj,speed,callback) {
+function myAnim(obj,myobj,speed,callback) {
 		obj.time=setInterval(fun,60);
 		function fun() {
 			for (var i in myobj) {
@@ -148,7 +149,7 @@ function css (obj,attr,val) {
 //	  c--- change in value（变化量）；end-start
 //	  d---duration（持续时间）  5000
 
-	function myAnimate (obj,myobj,dur,ween,callback) {
+function myAnimate (obj,myobj,dur,ween,callback) {
 		var callfun,tween
 		if(arguments.length==4){
 			if(ween.length>=4){
@@ -225,6 +226,10 @@ function css (obj,attr,val) {
 	     	运算的结果就是当前的运动路程。
 
 		   50
+		   flash
+		   actionscript flash
+		   javascript
+		   ecmascript
           */
   
  Tween = {  

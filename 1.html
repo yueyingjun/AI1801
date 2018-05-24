@@ -12,9 +12,7 @@
             width:200px;height:200px;
             border:1px solid red;
         }
-        div:nth-child(2){
-            width:500px;
-        }
+
     </style>
     <script>
         /*
@@ -54,57 +52,18 @@
             *   b 开始的值
             *   c 变化值
             *   d 持续的时间
+            *
+
             * */
-            function linear(t,b,c,d){
-                return c/d*t+b;
-            }
 
-            function ease(t,b,c,d) {
-                return -c*(t/=d)*(t-2) + b
-            }
+
+  $("div").animate({width:500,height:500},1000)
 
 
 
 
 
 
-
-            function animate(obj,attr,time,callback) {
-                var starts={}
-                for(var i in attr){
-                    starts[i]=parseInt(getComputedStyle(obj,null)[i])
-                }
-                console.log(starts);
-                var changes={};
-                for(var i in starts){
-                    changes[i]=attr[i]-starts[i];
-                }
-                var current=0;
-
-
-
-                var t=setInterval(function () {
-                    if(current>=time){
-                        if(callback) {
-                            callback()
-                        }
-                        for(var i in changes){
-                            obj.style[i]=attr[i]+"px"
-                        }
-
-                        clearInterval(t);
-
-                    }else{
-                        for(var i in changes){
-                            obj.style[i]=ease(current,starts[i],changes[i],time)+"px"
-                        }
-                    }
-                    current+=40;
-                },40)
-
-            }
-
-            animate(div,{width:500},1000)
         }
     </script>
 </head>
