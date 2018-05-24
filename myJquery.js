@@ -36,16 +36,24 @@ function $(selector) {
                 var clone=ele.cloneNode(true);
                 arr[i].parent.insertBefore(clone,arr[i].ele)
             }
-
             return this;
-
+        },
+        after: function (tag) {
+                var tag = tag.slice(1, -1);
+                var ele = document.createElement(tag);
+                var that = this;
+                this.each(function (index, obj) {
+                    that._inserAfter(ele.cloneNode(), obj)
+                })
 
         },
-        after: function () {
-
-        },
-        replace: function () {
-
+        replace: function (tag) {
+            var tag=tag.slice(1,-1);
+            var ele=document.createElement(tag);
+            this.each(function (index,obj) {
+                var parent=obj.parentNode;
+                parent.replaceChild(ele.cloneNode(),obj)
+            })
         },
         clone: function (opt) {
             var opt = opt === true ? true : false;
@@ -99,24 +107,29 @@ function $(selector) {
             return this;
         },
         css: function (attr, val) {
-            this.each(function (index, obj) {
-                if (typeof attr == "string") {
-                    if (attr == "width" || attr == "height" || attr == "padding" || attr == "margin" || attr == "font-size") {
+            if(arguments.length==1){
+                return getComputedStyle(this[0],null)[attr]
+                
+            }else {
+                this.each(function (index, obj) {
+                    if (typeof attr == "string") {
+                        if (attr == "width" || attr == "height" || attr == "padding" || attr == "margin" || attr == "font-size") {
 
-                        obj.style[attr] = parseInt(val) + "px";
-                    } else {
-                        obj.style[attr] = val
-                    }
-                } else if (typeof  attr == "object") {
-                    for (var i in attr) {
-                        if (i == "width" || i == "height" || i == "padding" || i == "margin" || i == "font-size") {
-                            obj.style[i] = parseInt(attr[i]) + "px";
+                            obj.style[attr] = parseInt(val) + "px";
                         } else {
-                            obj.style[i] = attr[i]
+                            obj.style[attr] = val
+                        }
+                    } else if (typeof  attr == "object") {
+                        for (var i in attr) {
+                            if (i == "width" || i == "height" || i == "padding" || i == "margin" || i == "font-size") {
+                                obj.style[i] = parseInt(attr[i]) + "px";
+                            } else {
+                                obj.style[i] = attr[i]
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
             return this;
         },
         attr: function () {
@@ -321,6 +334,19 @@ function $(selector) {
         },
         _siblings: function (obj) {
             return this._nexts(obj).concat(this._pres(obj))
+        },
+        _inserAfter:function(insertObj,afterObj) {
+                 var parent=afterObj.parentNode;
+                 var next=afterObj.nextSibling;
+                 while (next&&next.nodeType!=1){
+                     next=next.nextSibling
+                 }
+                 if(next){
+                     parent.insertBefore(insertObj,next);
+                 }else{
+                     parent.appendChild(insertObj);
+                 }
+
         }
 
     }
